@@ -2,3 +2,5 @@
   - `docker rm -vf $(docker ps -a -q)`
 - Delete all images
   - `docker rmi -f $(docker images -a -q)`
+- Delete all dangling images
+  - `docker rmi -f $(docker images -f "dangling=true" -q -a)`
