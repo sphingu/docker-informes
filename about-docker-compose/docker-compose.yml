@@ -1,0 +1,31 @@
+verions: "3.8"
+services:
+  web:
+    build: ./fontend
+    ports:
+      - 3000:3000
+    volumes: 
+      - ./frontend:/app
+  web-tests:
+    image: folder_name_web
+    volumes: 
+      - ./frontend:/app
+    command: npm test
+  api:
+    build: ./backend
+    ports:
+      - 3001:3001
+    environment:
+      DB_URL: mongodb://db/db-name
+    volumes:
+      - ./backend:/app
+    # command: ./wait-for db:27017 && migrate-mongo up && npm start
+    command: ./docker-entrypoint.sh
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - diviser:/data/db
+volumes:
+  diviser:
